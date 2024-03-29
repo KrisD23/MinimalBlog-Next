@@ -4,25 +4,36 @@ import PostUser from "@/components/postUser/postUser";
 import { Suspense } from "react";
 import { getPost } from "@/lib/data";
 
-// Fetch data with an API
-// const getData = async (slug) => {
-//   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
+// FETCH DATA WITH AN API
+const getData = async (slug) => {
+  const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
 
-//   if (!res.ok) {
-//     throw new Error("Something went wrong");
-//   }
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
 
-//   return res.json();
-// };
+  return res.json();
+};
+
+export const generateMetadata = async ({ params }) => {
+  const { slug } = params;
+
+  const post = await getPost(slug);
+
+  return {
+    title: post.title,
+    description: post.desc,
+  };
+};
 
 const SinglePostPage = async ({ params }) => {
   const { slug } = params;
 
-  // Fetch data with an API
-  // const post = await getData(slug);
+  // FETCH DATA WITH AN API
+  const post = await getData(slug);
 
-  // Fetch data without an API
-  const post = await getPost(slug);
+  // FETCH DATA WITHOUT AN API
+  // const post = await getPost(slug);
 
   return (
     <div className={styles.container}>
@@ -41,7 +52,7 @@ const SinglePostPage = async ({ params }) => {
           )}
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>Published</span>
-            <span className={styles.detailValue}>01.02.2024</span>
+            <span className={styles.detailValue}>1.1.24</span>
           </div>
         </div>
         <div className={styles.content}>{post.desc}</div>
@@ -51,4 +62,3 @@ const SinglePostPage = async ({ params }) => {
 };
 
 export default SinglePostPage;
-// 1:36
