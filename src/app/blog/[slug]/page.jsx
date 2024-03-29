@@ -26,19 +26,14 @@ const SinglePostPage = async ({ params }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.imgContainer}>
-        <Image src="/post.jpg" alt="" fill className={styles.img} />
-      </div>
+      {post.img && (
+        <div className={styles.imgContainer}>
+          <Image src={post.img} alt="" fill className={styles.img} />
+        </div>
+      )}
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>{post?.title}</h1>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.detail}>
-          <Image
-            className={styles.avatar}
-            src="/post.jpg"
-            alt=""
-            width={50}
-            height={50}
-          />
           {post && (
             <Suspense fallback={<div>Loading...</div>}>
               <PostUser userId={post.userId} />
@@ -49,7 +44,7 @@ const SinglePostPage = async ({ params }) => {
             <span className={styles.detailValue}>01.02.2024</span>
           </div>
         </div>
-        <div className={styles.content}>{post.body}</div>
+        <div className={styles.content}>{post.desc}</div>
       </div>
     </div>
   );
