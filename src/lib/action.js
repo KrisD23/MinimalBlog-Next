@@ -49,12 +49,12 @@ export const handleLogout = async () => {
   await signOut("github");
 };
 
-export const register = async (formData) => {
+export const register = async (previousState, formData) => {
   const { username, email, password, img, passwordRepeat } =
     Object.fromEntries(formData);
 
   if (password !== passwordRepeat) {
-    return "passwords do not match";
+    return { error: "passwords do not match" };
   }
   try {
     connectToDb();
@@ -62,7 +62,7 @@ export const register = async (formData) => {
     const user = await User.findOne({ username });
 
     if (user) {
-      return "Username already exists";
+      return { error: "Username already exists" };
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -75,6 +75,8 @@ export const register = async (formData) => {
       img,
     });
     await newUser.save();
+    console.log("saved to db");
+    return { success: true };
   } catch (error) {
     console.log(error);
     return { error: "Something went wrong" };
