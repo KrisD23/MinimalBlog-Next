@@ -3,14 +3,14 @@
 import { login } from "@/lib/action";
 import styles from "./login.module.css";
 import { useFormState } from "react-dom";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
+// import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(login, undefined);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   //   useEffect(() => {
   //     state?.success && router.push("/login");
